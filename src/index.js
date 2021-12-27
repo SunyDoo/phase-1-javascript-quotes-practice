@@ -2,14 +2,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     getAllQuotes()
     const newQuoteForm = document.getElementById('new-quote-form')
     function getAllQuotes(){
-        fetch ('http://localhost:3000/quotes?_embed=likes')
+        fetch ('http://localhost:3000/quotes')
         .then (res=>res.json())
         .then (data=>data.forEach(quote=>renderOneQuote(quote)))
     }
     function renderOneQuote(quoteObj){
         const quoteList = document.getElementById('quote-list')
         const quote = document.createElement('li')
-        const fav = false
         quoteList.appendChild(quote)
         quote.classname = 'quote-card'
         quote.id = `${quoteObj.id}`
@@ -18,19 +17,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
             <p class="mb-0">${quoteObj.quote}</p>
             <footer class="blockquote-footer">${quoteObj.author}</footer>
             <br>            
-            <button class='btn-success'>
-            ${Object.keys(quoteObj=>{
-                if (quoteObj.likes){
-                    fav = true                    
-                }                 
-            })}
-            ${fav ? `Likes: <span>${quoteObj.likes}</span>`:'Likes: <span>0</span>'}     
+            <button class='btn-success'>Likes: <span>${quoteObj.likes}</span>     
             </button>
             <button class='btn-danger'>Delete</button>
             </blockquote>
         `
         console.log(quoteObj.likes)
-        debugger
         quote.addEventListener('click', handleClick)
         function handleClick(e){
             if (e.target.innerText == 'Delete'){
@@ -91,7 +83,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
         e.preventDefault()
         let newObj = {
             quote: e.target.quote.value,
-            author: e.target.author.value
+            author: e.target.author.value,
+            likes: 0
         }
         newQuoteForm.reset()
         renderOneQuote(newObj)
@@ -133,3 +126,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 // </span></button>
 // <button class='btn-danger'>Delete</button>
 // </blockquote>
+
+
+// {/* <button class='btn-success'>
+// ${Object.keys(quoteObj=>{
+//     debugger
+//     if (quoteObj.likes){
+//         fav = true                    
+//     }                 
+// })}
+// ${fav ? `Likes: <span>${quoteObj.likes}</span>`:'Likes: <span>0</span>'}  */}
