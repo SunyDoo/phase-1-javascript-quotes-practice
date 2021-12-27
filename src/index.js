@@ -17,20 +17,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
             <blockquote class="blockquote">
             <p class="mb-0">${quoteObj.quote}</p>
             <footer class="blockquote-footer">${quoteObj.author}</footer>
-            <br>
-            
+            <br>            
             <button class='btn-success'>
             ${Object.keys(quoteObj=>{
                 if (quoteObj.likes){
                     fav = true                    
                 }                 
-                }
-            )}
+            })}
             ${fav ? `Likes: <span>${quoteObj.likes}</span>`:'Likes: <span>0</span>'}     
             </button>
             <button class='btn-danger'>Delete</button>
             </blockquote>
         `
+        console.log(quoteObj.likes)
+        debugger
         quote.addEventListener('click', handleClick)
         function handleClick(e){
             if (e.target.innerText == 'Delete'){
@@ -97,9 +97,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         renderOneQuote(newObj)
         updateQuoteList(newObj)
     }
-
-
-
 })
 
 
